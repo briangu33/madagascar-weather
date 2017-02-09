@@ -1,6 +1,8 @@
 import matplotlib
+import numpy as np
 from matplotlib import pyplot as plt
 from hyperparameters import HyperparameterSet
+from PIL import Image
 
 """
 Functions for plotting
@@ -16,11 +18,25 @@ def drawMainWindow(xMin, xMax, yMin, yMax, evs, stdevs):
 	img = plt.imshow(evs, interpolation='nearest', cmap = cmap, origin = 'lower', extent = [xMin, xMax, yMin, yMax])
 	# make a color bar
 	plt.colorbar(img, cmap=cmap)
+	plt.ylabel("latitude")
+	plt.xlabel("longitude")
 
 	plt.subplot(1, 2, 2)
 	plt.title("Standard Deviation")
 	img2 = plt.imshow(stdevs, interpolation='nearest', cmap = cmap, origin = 'lower', extent = [xMin, xMax, yMin, yMax])
 	plt.colorbar(img2, cmap = cmap)
+	plt.ylabel("latitude")
+	plt.xlabel("longitude")
+
+	plt.show()
+
+def drawStations(xMin, xMax, yMin, yMax, stations):
+	plt.title("Background Map")
+	img3 = plt.imread("imgs/madagascar.png")
+	plt.scatter(map(lambda x: x.loc[0], filter(lambda x: x.temperature != "", stations)), map(lambda x: x.loc[1], filter(lambda x: x.temperature != "", stations)), s=40)
+	plt.ylabel("latitude")
+	plt.xlabel("longitude")
+	plt.imshow(img3, cmap = 'gray', extent = [xMin, xMax, yMin, yMax])
 
 	plt.show()
 
@@ -53,4 +69,6 @@ def drawHPSpace3D(data_points, objFunction, min_len, max_len, min_kernel, max_ke
 
 	img = plt.imshow(func_values, interpolation='nearest', cmap = cmap, origin = 'lower', extent = [min_len, max_len, min_kernel, max_kernel])
 	plt.colorbar(img, cmap=cmap)
+	plt.ylabel("Length Scale")
+	plt.xlabel("Kernel Scale")
 	plt.show()

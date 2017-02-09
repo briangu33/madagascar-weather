@@ -36,6 +36,9 @@ Reading the input, generating predictions, displaying predictions.
 stations = getinput.getStations(day)
 getinput.printData(stations)
 
+#plot station locations
+plot.drawStations(min_long, max_long, min_lat, max_lat, stations)
+
 #optimize hyperparameter (length scale)
 min_HPSet = HyperparameterSet(0.1, 0.1, 0.)
 max_HPSet = HyperparameterSet(10., 10., 0.)
@@ -49,4 +52,4 @@ prediction = predict.getPredictions(resV, resH, min_lat, max_lat, min_long, max_
 plot.drawMainWindow(min_long, max_long, min_lat, max_lat, prediction.temperatures, prediction.stdevs)
 
 #plot the objective function vs. hyperparameters graph
-plot.drawHPSpace3D(stations, loocvSumLogLikelihood, 1.5, 2.5, 2., 3., kernel)
+plot.drawHPSpace3D(stations, loocvSumLogLikelihood, 1., 3., 1., 3.5, kernel, 40, 40)
